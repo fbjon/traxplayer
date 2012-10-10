@@ -8,6 +8,6 @@ such as RiffTrax commentary tracks. Any fil
 
 ## Requirements
 - Mplayer
-- Java 1.7
+- Java 1.6
 
 
