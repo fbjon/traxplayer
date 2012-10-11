@@ -25,13 +25,6 @@ public class Mplayer implements MplayerListener, ConfigListener {
         this.other = other;
         this.mplayerpath = conf.getString(Config.confPlayer);
         sensitivity_default = conf.getDouble(Config.confSensitivity);
-
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        kill();
-        super.finalize();
     }
 
     synchronized public void kill() {
@@ -77,7 +70,6 @@ public class Mplayer implements MplayerListener, ConfigListener {
                                 other.killed();
                             }
                         }, "Mplayer-killwaiter:" + mediaFile.getName()).start();
-                        pause();
                         write("get_time_length");
                     } catch (IOException ex) {
                         System.out.println(ex.getMessage());

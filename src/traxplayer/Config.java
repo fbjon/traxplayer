@@ -16,6 +16,8 @@ public final class Config {
     public static final String mainY = "mainY";
     private static String defaultFile = "traxplayer.conf";
     private static File defaultFolder = new File(System.getProperty("user.home"), ".traxplayer");
+    public final String version;
+    public final String build;
 
     public Config() {
         this(new File(defaultFile).exists()
@@ -29,7 +31,14 @@ public final class Config {
         props.setProperty(confPlayer, someDefaultMplayer());
         props.setProperty(confDefaultMediaFolder, "");
         read();
-
+        Properties p = new Properties();
+        try {
+            p.load(getClass().getResourceAsStream("/traxplayer/resources/app.properties"));
+        } catch (IOException ex) {
+            System.out.println("Boom");
+        }
+        version = p.getProperty("version", "");
+        build = p.getProperty("build", "");
     }
 
     private String someDefaultMplayer() {
@@ -85,7 +94,7 @@ public final class Config {
         return (String) props.get(key);
     }
 
-    synchronized public String set(String key, String value) {
+    public String set(String key, String value) {
         String prev;
         synchronized (props) {
             prev = (String) props.setProperty(key, value);
@@ -118,13 +127,13 @@ public final class Config {
 
     private void notify(String k) {
         for (Object l : listeners.toArray()) {
-            ((ConfigListener)l).configChanged(k);
+            ((ConfigListener) l).configChanged(k);
         }
     }
 
     public void reset() {
-        for (Object l :  listeners.toArray()) {
-            ((ConfigListener)l).reset();
+        for (Object l : listeners.toArray()) {
+            ((ConfigListener) l).reset();
         }
     }
 
@@ -138,5 +147,8 @@ public final class Config {
         synchronized (listeners) {
             listeners.add(l);
         }
+        l.configChanged(confDefaultMediaFolder);
+        l.configChanged(confPlayer);
+        l.configChanged(confSensitivity);
     }
 }

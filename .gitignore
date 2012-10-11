@@ -1,3 +1,4 @@
+#stuff
 *.class
 
 # Package Files #
@@ -5,6 +6,5 @@
 *.war
 *.ear
 
-# Build files #
-dist
-build
+build/
+dist/
