@@ -21,10 +21,6 @@ public class TraxPlayerFrame extends javax.swing.JFrame implements ConfigListene
 
         initComponents();
 
-        Rectangle r = this.getBounds();
-        r.setSize(r.width, confPanel.getLocation().y + this.getLocation().y + 2);
-        
-        this.setBounds(r);
 
         audioOffset.addChangeListener(new ChangeListener() {
             @Override
@@ -51,6 +47,13 @@ public class TraxPlayerFrame extends javax.swing.JFrame implements ConfigListene
             }
         });
         initConfPanel();
+        
+        Rectangle r = this.getBounds();
+        r.setSize(r.width, confPanel.getLocation().y + this.getInsets().top);
+        
+        this.setBounds(r);
+        
+        
     }
 
     private void initConfPanel() {
